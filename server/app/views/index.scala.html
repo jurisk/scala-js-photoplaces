@@ -1,0 +1,17 @@
+@(title: String, flickrKey: String)(implicit environment: play.api.Environment)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="https://maps.googleapis.com/maps/api/js"> </script>
+    </head>
+    <body>
+        <div id="mountNode"></div>
+        <script>var flickrKey = "@flickrKey";</script>
+        @playscalajs.html.scripts("client")
+    </body>
+</html>
