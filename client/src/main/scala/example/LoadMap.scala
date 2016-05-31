@@ -17,12 +17,14 @@ object LoadMap {
       <.div(
         if (state.photos.nonEmpty) {
           val markers = state.photos.map { photo =>
-            Marker(photo.latitude, photo.longitude, photo.thumbnail)
+            Marker(photo)
           }
 
           dom.console.info(s"${markers.length} markers")
 
-          Map(markers, props.ctx)
+          Map(markers,
+            m ⇒ props.ctx.set(Page.FlickrPhoto(m.photo.id, m.photo.farm, m.photo.server, m.photo.secret)).runNow(),
+            props.ctx)
         } else EmptyTag
       )
     }

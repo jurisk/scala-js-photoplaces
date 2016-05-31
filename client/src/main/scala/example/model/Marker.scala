@@ -1,3 +1,5 @@
 package example.model
 
-case class Marker(lat: Double, lng: Double, img: String)
+import example.flickr
+
+case class Marker(photo: flickr.Photo)
