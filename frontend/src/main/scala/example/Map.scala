@@ -26,13 +26,13 @@ object Map {
       val map = new GoogleMap(
         scope.getDOMNode(), o(
           center = o(
-            lat = markers.map(_.photo.latitude).sum / markers.size,
-            lng = markers.map(_.photo.longitude).sum / markers.size
+            lat = markers.map(_.photo.latitude.toDouble).sum / markers.size,
+            lng = markers.map(_.photo.longitude.toDouble).sum / markers.size
           ), zoom = 12
         ))
       markers.foreach(m ⇒ {
         val marker = new GoogleMapMarker(o(
-          position = o(lat = m.photo.latitude, lng = m.photo.longitude),
+          position = o(lat = m.photo.latitude.toDouble, lng = m.photo.longitude.toDouble),
           map = map,
           icon = m.photo.thumbnail
         ))

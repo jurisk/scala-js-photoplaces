@@ -1,8 +1,9 @@
 package example
 
-import example.flickr.{Service, Photo}
+import example.flickr.Service
 import example.model.Marker
-import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
+import example.protocol.Photo
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react.extra.router.RouterCtl
 import org.scalajs.dom
 import org.scalajs.dom.Coordinates
@@ -36,13 +37,11 @@ object LoadMap {
     .componentDidMount { scope =>
       val coords = scope.props.coordinates
       import scala.concurrent.ExecutionContext.Implicits.global
-      val flickrApiKey = Globals.flickrKey
-      val f = new Service(flickrApiKey).searchPhotos(coords).map { results =>
+      val f = new Service().searchPhotos(coords).map { results =>
         scope.modState(_.copy(photos = results))
       }
       Callback.future(f)
     }
-    // TODO - what about update Props?
     .build
 
   def apply(coords: Coordinates, ctx: RouterCtl[Page]) = component(Props(coords, ctx))

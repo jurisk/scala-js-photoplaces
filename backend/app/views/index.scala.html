@@ -1,4 +1,4 @@
-@(title: String, flickrKey: String)(implicit environment: play.api.Environment)
+@(title: String)(implicit environment: play.api.Environment)
 
 <!DOCTYPE html>
 
@@ -11,7 +11,6 @@
     </head>
     <body>
         <div id="mountNode"></div>
-        <script>var flickrKey = "@flickrKey";</script>
-        @playscalajs.html.scripts("client")
+        @playscalajs.html.scripts("frontend")
     </body>
 </html>
