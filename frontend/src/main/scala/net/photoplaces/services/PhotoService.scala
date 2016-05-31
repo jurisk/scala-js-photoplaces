@@ -1,4 +1,4 @@
-package net.photoplaces.flickr
+package net.photoplaces.services
 
 import cats.data.Xor
 import net.photoplaces.protocol.{LoadPhotosRequest, LoadPhotosResponse}
@@ -12,10 +12,10 @@ import japgolly.scalajs.react.extra.router.BaseUrl
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.concurrent.Future
 
-class Service {
+class PhotoService {
   val baseUrl = BaseUrl.fromWindowOrigin_/
 
-  def searchPhotos(coordinates: Coordinates): Future[List[Photo]] = {
+  def searchByLocation(coordinates: Coordinates): Future[List[Photo]] = {
     Ajax.post(
       (baseUrl / "photos").value,
       LoadPhotosRequest(coordinates.latitude, coordinates.longitude).asJson.toString(),

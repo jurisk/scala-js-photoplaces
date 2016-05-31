@@ -3,8 +3,7 @@ package net.photoplaces.components
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.all._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import net.photoplaces.flickr.Service
-import net.photoplaces.model.Marker
+import net.photoplaces.services.PhotoService
 import net.photoplaces.pages.Page
 import net.photoplaces.protocol.Photo
 import org.scalajs.dom
@@ -18,15 +17,13 @@ object LoadMap {
     def render(props: Props, state: State) = {
       div(
         if (state.photos.nonEmpty) {
-          val markers = state.photos.map { photo =>
-            Marker(photo)
-          }
+          dom.console.info(s"${state.photos.length} photos")
 
-          dom.console.info(s"${markers.length} markers")
-
-          Map(markers,
-            m ⇒ props.ctx.set(Page.FlickrPhoto(m.photo.id, m.photo.farm, m.photo.server, m.photo.secret)).runNow(),
-            props.ctx)
+          Map(
+            state.photos,
+            photo ⇒ props.ctx.set(Page.FlickrPhoto(photo.id, photo.farm, photo.server, photo.secret)).runNow(),
+            props.ctx
+          )
         } else EmptyTag
       )
     }
@@ -38,7 +35,7 @@ object LoadMap {
     .componentDidMount { scope =>
       val coords = scope.props.coordinates
       import scala.concurrent.ExecutionContext.Implicits.global
-      val f = new Service().searchPhotos(coords).map { results =>
+      val f = new PhotoService().searchByLocation(coords).map { results =>
         scope.modState(_.copy(photos = results))
       }
       Callback.future(f)

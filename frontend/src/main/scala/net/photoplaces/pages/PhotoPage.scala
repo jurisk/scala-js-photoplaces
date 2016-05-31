@@ -8,7 +8,7 @@ object PhotoPage {
   val component = ReactComponentB[Page.FlickrPhoto]("Photo page")
     .render_P(p ⇒
       div(
-        h4(s"Photo from Flickr:"),
+        h4(s"Photo"),
         img(src := p.url)
       )
     )
