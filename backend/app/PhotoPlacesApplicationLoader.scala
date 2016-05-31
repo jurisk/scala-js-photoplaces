@@ -4,7 +4,7 @@ import play.api.libs.ws.ahc.AhcWSComponents
 import play.api.{ApplicationLoader, BuiltInComponentsFromContext}
 import router.Routes
 
-class ExampleApplicationLoader() extends ApplicationLoader {
+class PhotoPlacesApplicationLoader() extends ApplicationLoader {
   def load(context: Context) = new ApplicationComponents(context).application
 }
 

@@ -12,3 +12,4 @@ src_managed/
 project/boot/
 project/plugins/project/
 
+server/conf/secret.conf

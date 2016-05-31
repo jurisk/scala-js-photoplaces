@@ -1,6 +1,7 @@
 package controllers
 
-import example.protocol.{LoadPhotosRequest, LoadPhotosResponse, Photo}
+import net.photoplaces.protocol.{LoadPhotosRequest, LoadPhotosResponse}
+import net.photoplaces.protocol.Photo
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.{Configuration, Environment}
@@ -8,7 +9,6 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class Application(wsClient: WSClient, configuration: Configuration)(implicit environment: Environment) extends Controller {
-
   val flickrKey = configuration.getString("flickr-key").getOrElse(sys.error("flickr-key not found in config"))
 
   case class SearchPhotosResponse(photos: SearchPhotosResponseDetails)

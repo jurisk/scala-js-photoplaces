@@ -1,11 +1,13 @@
-package example
+package net.photoplaces.components
 
-import example.lib.{GoogleMap, GoogleMapMarker}
-import example.model.Marker
+import google.map.{GoogleMap, GoogleMapMarker}
 import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{TopNode, ReactComponentU, Callback, ReactComponentB}
-import example.styles.GlobalStyles._
+import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react.{Callback, ReactComponentB, ReactComponentU, TopNode}
+import net.photoplaces.model.Marker
+import net.photoplaces.pages.Page
+import net.photoplaces.styles.GlobalStyles._
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
@@ -16,7 +18,7 @@ object Map {
 
   private val component = ReactComponentB[Props]("Map")
     .render_P { x =>
-      <.div(mapStyle,
+      div(mapStyle,
         ""
       )
     }

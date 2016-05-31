@@ -1,8 +1,9 @@
-package example
+package net.photoplaces.pages
 
-import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
 import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import net.photoplaces.components.LoadMap
 import org.scalajs.dom
 import org.scalajs.dom.raw.{Position, PositionError}
 
@@ -15,14 +16,14 @@ object HomePage {
 
   class Backend($: BackendScope[Props, State]) {
     def render(props: Props, state: State) = {
-      <.div(
+      div(
         state.position.map { position =>
-          <.div(
+          div(
             s"Location: ${position.coords.latitude}, ${position.coords.longitude}",
             LoadMap(position.coords, props)
           )
         }.getOrElse {
-          <.div(s"Unknown location")
+          div(s"Detecting location...")
         }
       )
     }

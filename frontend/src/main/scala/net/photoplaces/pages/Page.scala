@@ -1,4 +1,4 @@
-package example
+package net.photoplaces.pages
 
 sealed trait Page
 

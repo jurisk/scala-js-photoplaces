@@ -1,4 +1,4 @@
-package example.lib
+package google.map
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName

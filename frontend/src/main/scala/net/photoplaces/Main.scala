@@ -1,6 +1,7 @@
-package example
+package net.photoplaces
 
-import example.styles.GlobalStyles
+import net.photoplaces.pages.{PhotoPage, Page, HomePage}
+import net.photoplaces.styles.GlobalStyles
 import japgolly.scalajs.react.extra.router.{BaseUrl, Redirect, Router, RouterConfigDsl}
 
 import scala.scalajs.js
@@ -20,17 +21,19 @@ object Main extends js.JSApp {
 
       val photoId = string("[a-z0-9_]+")
 
-      (trimSlashes
+      (removeTrailingSlashes
         | staticRoute(root, Page.Home) ~> renderR(ctl => HomePage.component(ctl))
-        | dynamicRouteCT[Page.FlickrPhoto](("#photo" / photoId)
-        .pmap(_.split("_").toList match {
-          case id :: farm :: server :: secret :: Nil ⇒
-            Try(farm.toInt).toOption.map(f ⇒
-              Page.FlickrPhoto(id, f, server, secret)
-            )
-          case other ⇒ None
-        })(fp ⇒ s"${fp.id}_${fp.farm}_${fp.server}_${fp.secret}")) ~> dynRender(PhotoPage(_))
-        )
+        | dynamicRouteCT[Page.FlickrPhoto](
+            (root / "photo" / photoId)
+              .pmap(_.split("_").toList match {
+                case id :: farm :: server :: secret :: Nil ⇒
+                  Try(farm.toInt).toOption.map(f ⇒
+                    Page.FlickrPhoto(id, f, server, secret)
+                  )
+                case other ⇒ None
+              })(fp ⇒ s"${fp.id}_${fp.farm}_${fp.server}_${fp.secret}")
+          ) ~> dynRender(PhotoPage(_))
+      )
         .notFound { x =>
           dom.console.error(s"Page not found: $x")
           redirectToPage(Page.Home)(Redirect.Replace)

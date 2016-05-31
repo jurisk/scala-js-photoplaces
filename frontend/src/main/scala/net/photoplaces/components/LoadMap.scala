@@ -1,13 +1,14 @@
-package example
+package net.photoplaces.components
 
-import example.flickr.Service
-import example.model.Marker
-import example.protocol.Photo
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react.extra.router.RouterCtl
+import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import net.photoplaces.flickr.Service
+import net.photoplaces.model.Marker
+import net.photoplaces.pages.Page
+import net.photoplaces.protocol.Photo
 import org.scalajs.dom
 import org.scalajs.dom.Coordinates
-import japgolly.scalajs.react.vdom.prefix_<^._
 
 object LoadMap {
   case class Props(coordinates: Coordinates, ctx: RouterCtl[Page])
@@ -15,7 +16,7 @@ object LoadMap {
 
   class Backend($: BackendScope[Props, State]) {
     def render(props: Props, state: State) = {
-      <.div(
+      div(
         if (state.photos.nonEmpty) {
           val markers = state.photos.map { photo =>
             Marker(photo)
