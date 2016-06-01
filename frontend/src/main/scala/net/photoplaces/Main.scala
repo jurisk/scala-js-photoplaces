@@ -38,9 +38,6 @@ object Main extends js.JSApp {
           dom.console.error(s"Page not found: $x")
           redirectToPage(Page.Home)(Redirect.Replace)
         }
-        .onPostRender { (prev, cur) =>
-          Callback.log(s"$Page changing from $prev to $cur.")
-        }
     }
 
     val router = Router(baseUrl, routerConfig)

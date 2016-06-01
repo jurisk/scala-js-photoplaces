@@ -1,14 +1,22 @@
 package controllers
 
+import cats.data.Xor
 import net.photoplaces.protocol.{LoadPhotosRequest, LoadPhotosResponse}
 import net.photoplaces.protocol.Photo
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.{Configuration, Environment}
 import play.api.mvc._
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class Application(wsClient: WSClient, configuration: Configuration)(implicit environment: Environment) extends Controller {
+import scala.concurrent.ExecutionContext.Implicits.global
+import io.circe.parser._
+import io.circe.syntax._
+import io.circe.generic.auto._
+import utils.CirceSupport
+
+class Application(wsClient: WSClient, configuration: Configuration)(implicit environment: Environment)
+  extends Controller with CirceSupport {
+
   val flickrKey = configuration.getString("flickr-key").getOrElse(sys.error("flickr-key not found in config"))
 
   case class SearchPhotosResponse(photos: SearchPhotosResponseDetails)
@@ -18,13 +26,7 @@ class Application(wsClient: WSClient, configuration: Configuration)(implicit env
     Ok(views.html.index("Title"))
   }
 
-  implicit val format0 = Json.format[Photo]
-  implicit val format1 = Json.format[LoadPhotosRequest]
-  implicit val format2 = Json.format[LoadPhotosResponse]
-  implicit val format3 = Json.format[SearchPhotosResponseDetails]
-  implicit val format4 = Json.format[SearchPhotosResponse]
-
-  def loadPhotos = Action.async(parse.json[LoadPhotosRequest]) { req ⇒
+  def loadPhotos = Action.async(circe.json[LoadPhotosRequest]) { req ⇒
     val b = req.body
     val params = Map(
       "method" -> "flickr.photos.search",
@@ -39,11 +41,10 @@ class Application(wsClient: WSClient, configuration: Configuration)(implicit env
     // TODO: paginate?
     val url = s"https://api.flickr.com/services/rest/?" + (params.map { case (k, v) => s"$k=$v" } mkString "&")
     wsClient.url(url).get()
-      .map(_
-        .json
-        .as[SearchPhotosResponse])
-      .map(r ⇒
-        Ok(Json.toJson(LoadPhotosResponse(r.photos.photo)))
-      )
+      .map(r ⇒ decode[SearchPhotosResponse](r.body))
+      .map {
+        case Xor.Right(res) ⇒ Ok(LoadPhotosResponse(res.photos.photo).asJson)
+        case Xor.Left(error) ⇒ InternalServerError(error.getMessage)
+      }
   }
 }
