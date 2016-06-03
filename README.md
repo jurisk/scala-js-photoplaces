@@ -1,15 +1,5 @@
-# ScalaJS workshop step 1. Backend setup.
+# ScalaJS workshop step 2. Scala.js-React Router
 
-* Get Flickr API key https://www.flickr.com/services/apps/create/noncommercial/
-* Put it in `secret.conf`
-* Check everything works:
-```
-sbt run
-
-curl -i -X POST \
-   -H "Content-Type:application/json" \
-   -d \
-'{ "latitude": 56.948889, "longitude":24.106389}' \
- 'http://127.0.0.1:9000/photos'
-```
-
+* Add Scala.js-React from https://github.com/japgolly/scalajs-react
+* Introduce router in Main.scala
+* Have "dummy" pages for each route
