@@ -38,7 +38,6 @@ class Application(wsClient: WSClient, configuration: Configuration)(implicit env
       "extras" -> "geo"
     )
 
-    // TODO: paginate?
     val url = s"https://api.flickr.com/services/rest/?" + (params.map { case (k, v) => s"$k=$v" } mkString "&")
     wsClient.url(url).get()
       .map(r ⇒ decode[SearchPhotosResponse](r.body))

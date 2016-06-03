@@ -6,7 +6,7 @@
 GET        /assets/*file        controllers.Assets.at(path="/public", file)
 
 #API
-POST        /photos              controllers.Application.loadPhotos
+POST       /photos              controllers.Application.loadPhotos
 # Pages
 GET        /                    controllers.Application.index(path = "")
 GET        /*path               controllers.Application.index(path)

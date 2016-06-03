@@ -8,6 +8,7 @@ import net.photoplaces.pages.Page
 import net.photoplaces.protocol.Photo
 import org.scalajs.dom
 import org.scalajs.dom.Coordinates
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 object LoadMap {
   case class Props(coordinates: Coordinates, ctx: RouterCtl[Page])
@@ -27,19 +28,18 @@ object LoadMap {
         } else EmptyTag
       )
     }
+
+    def initialize(coordinates: Coordinates): Callback = Callback.future {
+      new PhotoService().searchByLocation(coordinates).map { results =>
+        $.modState(_.copy(photos = results))
+      }
+    }
   }
 
   private val component = ReactComponentB[Props]("LoadMap")
     .initialState(State())
     .renderBackend[Backend]
-    .componentDidMount { scope =>
-      val coords = scope.props.coordinates
-      import scala.concurrent.ExecutionContext.Implicits.global
-      val f = new PhotoService().searchByLocation(coords).map { results =>
-        scope.modState(_.copy(photos = results))
-      }
-      Callback.future(f)
-    }
+    .componentDidMount { scope ⇒ scope.backend.initialize(scope.props.coordinates) }
     .build
 
   def apply(coords: Coordinates, ctx: RouterCtl[Page]) = component(Props(coords, ctx))

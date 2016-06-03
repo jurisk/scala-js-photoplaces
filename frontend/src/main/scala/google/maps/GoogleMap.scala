@@ -1,4 +1,4 @@
-package google.map
+package google.maps
 
 import org.scalajs.dom.raw.Element
 import scala.scalajs.js

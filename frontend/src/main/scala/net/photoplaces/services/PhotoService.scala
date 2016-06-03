@@ -9,13 +9,12 @@ import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
 import japgolly.scalajs.react.extra.router.BaseUrl
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class PhotoService {
   val baseUrl = BaseUrl.fromWindowOrigin_/
 
-  def searchByLocation(coordinates: Coordinates): Future[List[Photo]] = {
+  def searchByLocation(coordinates: Coordinates)(implicit ec: ExecutionContext): Future[List[Photo]] = {
     Ajax.post(
       (baseUrl / "photos").value,
       LoadPhotosRequest(coordinates.latitude, coordinates.longitude).asJson.toString(),

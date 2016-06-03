@@ -1,9 +1,9 @@
 package net.photoplaces.components
 
-import google.map.{GoogleMap, GoogleMapMarker}
+import google.maps.{GoogleMap, GoogleMapMarker}
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.all._
-import japgolly.scalajs.react.{Callback, ReactComponentB, ReactComponentU, TopNode}
+import japgolly.scalajs.react.{Callback, ReactComponentB}
 import net.photoplaces.pages.Page
 import net.photoplaces.protocol.Photo
 import net.photoplaces.styles.GlobalStyles._
@@ -18,9 +18,7 @@ object Map {
 
   private val component = ReactComponentB[Props]("Map")
     .render_P { x =>
-      div(mapStyle,
-        ""
-      )
+      div(mapStyle, "")
     }
     .componentDidMount(scope ⇒ Callback {
       val photos = scope.props.photos
@@ -30,7 +28,7 @@ object Map {
           center = o(
             lat = photos.map(_.latitude.toDouble).sum / photos.size,
             lng = photos.map(_.longitude.toDouble).sum / photos.size
-          ), zoom = 12
+          ), zoom = 14
         ))
       photos.foreach(photo ⇒ {
         val marker = new GoogleMapMarker(o(
@@ -40,11 +38,10 @@ object Map {
         ))
         marker.addListener("click", (e: js.Any) ⇒ scope.props.onPhotoClick(photo))
       })
-      scope.forceUpdate.runNow()
-    })
+
+    }.flatMap(_ ⇒ scope.forceUpdate))
     .build
 
-  def apply(photos: List[Photo], onMarkerClick: Photo ⇒ Unit, router: RouterCtl[Page]): ReactComponentU[Props, Unit, Unit, TopNode] = {
+  def apply(photos: List[Photo], onMarkerClick: Photo ⇒ Unit, router: RouterCtl[Page]) =
     component(Props(photos, onMarkerClick, router))
-  }
 }
