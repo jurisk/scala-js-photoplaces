@@ -3,7 +3,6 @@ package controllers
 import cats.data.Xor
 import net.photoplaces.protocol.{LoadPhotosRequest, LoadPhotosResponse}
 import net.photoplaces.protocol.Photo
-import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.{Configuration, Environment}
 import play.api.mvc._

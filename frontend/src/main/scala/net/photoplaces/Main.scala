@@ -1,48 +1,12 @@
 package net.photoplaces
 
-import net.photoplaces.pages.{PhotoPage, Page, HomePage}
-import net.photoplaces.styles.GlobalStyles
-import japgolly.scalajs.react.extra.router.{BaseUrl, Redirect, Router, RouterConfigDsl}
+import japgolly.scalajs.react._
+import org.scalajs.dom
 
 import scala.scalajs.js
-import org.scalajs.dom
-import japgolly.scalajs.react._
-
-import scala.util.Try
-import scalacss.Defaults._
-import scalacss.ScalaCssReact._
 
 object Main extends js.JSApp {
   def main(): Unit = {
-    val baseUrl = BaseUrl.fromWindowOrigin
-
-    val routerConfig = RouterConfigDsl[Page].buildConfig { dsl =>
-      import dsl._
-
-      val photoId = string("[a-z0-9_]+")
-
-      (removeTrailingSlashes
-        | staticRoute(root, Page.Home) ~> renderR(ctl => HomePage.component(ctl))
-        | dynamicRouteCT[Page.FlickrPhoto](
-            (root / "photo" / photoId)
-              .pmap(_.split("_").toList match {
-                case id :: farm :: server :: secret :: Nil ⇒
-                  Try(farm.toInt).toOption.map(f ⇒
-                    Page.FlickrPhoto(id, f, server, secret)
-                  )
-                case other ⇒ None
-              })(fp ⇒ s"${fp.id}_${fp.farm}_${fp.server}_${fp.secret}")
-          ) ~> dynRender(PhotoPage(_))
-      )
-        .notFound { x =>
-          dom.console.error(s"Page not found: $x")
-          redirectToPage(Page.Home)(Redirect.Replace)
-        }
-    }
-
-    val router = Router(baseUrl, routerConfig)
-    val mountNode = dom.document.getElementById("mountNode")
-    GlobalStyles.addToDocument
-    router() render mountNode
+    dom.console.error(s"Frontend not implemented")
   }
 }
