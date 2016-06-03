@@ -1,46 +1,15 @@
-# Preparation
-* Install IntelliJ with Scala & SBT plug-ins
+# ScalaJS workshop step 1. Backend setup.
 
-# Backend with Cross-compilation SBT build file
+* Get Flickr API key https://www.flickr.com/services/apps/create/noncommercial/
+* Put it in `secret.conf`
+* Check everything works:
+```
+sbt run
 
-* Play back-end which provides the API (have API sample URLs available)
-* Get Flickr API key https://www.flickr.com/services/apps/create/noncommercial/?
-* Explain where to put Flickr API key
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{ "latitude": 56.948889, "longitude":24.106389}' \
+ 'http://127.0.0.1:9000/photos'
+```
 
-# Add Scala.js-React with Router
-
-* Add Scala.js-React from https://github.com/japgolly/scalajs-react
-* Introduce router in Main.scala
-* Have "dummy" pages for each route
-
-# Home page with geo-location but without the map
-
-* Introduce state for Home page
-* Call geo-location API
-
-# Photo page
-
-* Have photo page showing the photo
-* Have sample URLs which work available
-
-# Photo service on client side
-
-* Add Circe dependency
-* Have photo service using Ajax to get data from the server
-
-# Google Maps
-
-* Explain wrapping native JS components
-* Introduce Google Maps component
-* Show photos on Google Map
-
-# Scala CSS
-
-* Add Scala CSS dependency
-* Find plain CSS used in all components, migrate to Scala CSS
-
-# Explain future improvements
-
-* Moving Play part to Circe
-* Handling changes for the Map component
-* Etc.
