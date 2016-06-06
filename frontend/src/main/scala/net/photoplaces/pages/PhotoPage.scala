@@ -8,7 +8,8 @@ object PhotoPage {
   val component = ReactComponentB[Page.FlickrPhoto]("Photo page")
     .render_P(p ⇒
       div(
-        h4(s"Photo: ${p.id}")
+        h4(s"Photo"),
+        img(src := p.url)
       )
     )
     .build
