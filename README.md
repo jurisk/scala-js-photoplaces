@@ -1,6 +1,5 @@
-# ScalaJS workshop step 6. Google maps API
+# ScalaJS workshop step 7. ScalaCSS
 
-* Explain wrapping native JS libraries
-* Introduce Google Maps library wrapper
-* Introduce Google Maps component
-* Show photos on Google Map
+* Define all styles that are needed for the app
+* Replace strigly-typed styles with typesafe ones
+* Add styles to document
