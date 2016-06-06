@@ -3,11 +3,11 @@ package net.photoplaces.components
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.all._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import net.photoplaces.services.PhotoService
 import net.photoplaces.pages.Page
 import net.photoplaces.protocol.Photo
-import net.photoplaces.services.PhotoService
+import org.scalajs.dom
 import org.scalajs.dom.Coordinates
-
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 object LoadMap {
@@ -18,7 +18,13 @@ object LoadMap {
     def render(props: Props, state: State) = {
       div(
         if (state.photos.nonEmpty) {
-          div(s"Loaded ${state.photos.length} photos")
+          dom.console.info(s"${state.photos.length} photos")
+
+          Map(
+            state.photos,
+            photo ⇒ props.ctx.set(Page.FlickrPhoto(photo.id, photo.farm, photo.server, photo.secret)).runNow(),
+            props.ctx
+          )
         } else EmptyTag
       )
     }
