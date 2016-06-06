@@ -1,8 +1,5 @@
-# ScalaJS workshop step 4. Photo page
+# ScalaJS workshop step 5. Client-side photo service
 
-* Have photo page showing the photo
-* Test on sample urls:
-```
-http://localhost:9000/photo/26702015343_8_7371_5ce66e4b4d
-http://localhost:9000/photo/27287083836_8_7452_e42863ced3
-```
+* Move protocol classes to shared
+* Have photo service using Ajax to get data from the server
+* Use photo service in LoadMap component to fetch photos
