@@ -1,5 +1,6 @@
-# ScalaJS workshop step 5. Client-side photo service
+# ScalaJS workshop step 6. Google maps API
 
-* Move protocol classes to shared
-* Have photo service using Ajax to get data from the server
-* Use photo service in LoadMap component to fetch photos
+* Explain wrapping native JS libraries
+* Introduce Google Maps library wrapper
+* Introduce Google Maps component
+* Show photos on Google Map
