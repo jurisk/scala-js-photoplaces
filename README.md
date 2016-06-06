@@ -8,3 +8,8 @@ There are branches step-1 to step-7 which should be checked out and performed in
 * Install JDK
 * Install IntelliJ with Scala & SBT plug-ins
 * Install SBT stand-alone
+
+To ensure you're set for the workshop, please, check that everything works:
+
+```sbt run```
+and go to http://localhost:9000
