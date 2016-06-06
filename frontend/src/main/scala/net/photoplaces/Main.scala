@@ -1,6 +1,7 @@
 package net.photoplaces
 
-import net.photoplaces.pages.{HomePage, Page, PhotoPage}
+import net.photoplaces.pages.{PhotoPage, Page, HomePage}
+import net.photoplaces.styles.GlobalStyles
 import japgolly.scalajs.react.extra.router.{BaseUrl, Redirect, Router, RouterConfigDsl}
 
 import scala.scalajs.js
@@ -8,6 +9,8 @@ import org.scalajs.dom
 import japgolly.scalajs.react._
 
 import scala.util.Try
+import scalacss.Defaults._
+import scalacss.ScalaCssReact._
 
 object Main extends js.JSApp {
   def main(): Unit = {
@@ -39,6 +42,7 @@ object Main extends js.JSApp {
 
     val router = Router(baseUrl, routerConfig)
     val mountNode = dom.document.getElementById("mountNode")
+    GlobalStyles.addToDocument
     router() render mountNode
   }
 }

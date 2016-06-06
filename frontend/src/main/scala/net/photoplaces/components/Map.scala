@@ -6,6 +6,8 @@ import japgolly.scalajs.react.vdom.all._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
 import net.photoplaces.pages.Page
 import net.photoplaces.protocol.Photo
+import net.photoplaces.styles.GlobalStyles._
+import scalacss.ScalaCssReact._
 import scala.scalajs.js
 
 object Map {
@@ -15,7 +17,7 @@ object Map {
 
   private val component = ReactComponentB[Props]("Map")
     .render_P { x =>
-      div(className := "google-map", "")
+      div(mapStyle, "")
     }
     .componentDidMount(scope ⇒ Callback {
       val photos = scope.props.photos
